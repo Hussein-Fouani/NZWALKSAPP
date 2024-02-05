@@ -1,7 +1,9 @@
 # New Zealand Walks API
 
 ![Project Logo or Banner Image](https://www.akana.com/sites/default/files/styles/social_preview_image/public/image/2019-06/image-blog-getting-most-api-management-600x400.jpg?itok=u4-5bLol)
-
+<p align="center">
+  <img src="[DIRECT_IMAGE_URL](https://www.akana.com/sites/default/files/styles/social_preview_image/public/image/2019-06/image-blog-getting-most-api-management-600x400.jpg?itok=u4-5bLol)" alt="Project Logo or Banner Image">
+</p>
 
 ## Overview
 
