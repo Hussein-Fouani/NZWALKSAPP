@@ -1,6 +1,7 @@
 # New Zealand Walks API
 
-![Project Logo or Banner Image][(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.svgrepo.com%2Fsvg%2F88703%2Fapi&psig=AOvVaw25LUkUPPTzQu8L-6gqBPgB&ust=1707222590742000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjazPGZlIQDFQAAAAAdAAAAABAE)]
+(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.svgrepo.com%2Fsvg%2F88703%2Fapi&psig=AOvVaw25LUkUPPTzQu8L-6gqBPgB&ust=1707222590742000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjazPGZlIQDFQAAAAAdAAAAABAE)
+
 
 ## Overview
 
