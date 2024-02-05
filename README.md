@@ -1,6 +1,6 @@
 # New Zealand Walks API
 
-(https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.svgrepo.com%2Fsvg%2F88703%2Fapi&psig=AOvVaw25LUkUPPTzQu8L-6gqBPgB&ust=1707222590742000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjazPGZlIQDFQAAAAAdAAAAABAE)
+![Project Logo or Banner Image](https://www.akana.com/sites/default/files/styles/social_preview_image/public/image/2019-06/image-blog-getting-most-api-management-600x400.jpg?itok=u4-5bLol)
 
 
 ## Overview
