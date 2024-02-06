@@ -25,7 +25,13 @@ namespace NZWALKS.Controllers
         [Route("{id:Guid}")]
         public IActionResult GetRegionByID([FromRoute]Guid id)
         {
-            nZDB.regions.Find(id); 
+             var region =nZDB.regions.Find(id);
+            if (region == null)
+            {
+                return NotFound();
+            }
+            return Ok(region);
+            
         }
             
     }
