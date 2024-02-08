@@ -9,6 +9,6 @@ namespace NZWALKS.IRepository
         Task<Regions> GetRegionByID(Guid id);
         Task<Regions> CreateRegion(Regions region);
         Task<Regions?> UpdateRegion(Guid id, Regions region);
-        Task<Regions> DeleteRegion(Guid id);
+        Task<Regions?> DeleteRegion(Guid id);
     }
 }
