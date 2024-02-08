@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using NZWALKS.DB;
 using NZWALKS.Models;
 using NZWALKS.Models.DTO;
@@ -13,9 +14,12 @@ namespace NZWALKS.IRepository
             this.nZDB = nZDB;
         }
 
-        public Task<Regions> CreateRegion(AddRegionDTO region)
+        public async Task<Regions> CreateRegion(Regions region)
         {
-            throw new NotImplementedException();
+           await nZDB.regions.AddAsync(region); 
+            await nZDB.SaveChangesAsync();
+            return region;
+
         }
 
         public Task<Regions> DeleteRegion(Guid id)
@@ -28,14 +32,23 @@ namespace NZWALKS.IRepository
             throw new NotImplementedException();
         }
 
-        public Task<Regions> GetRegionByID(Guid id)
+        public async Task<Regions?> GetRegionByID(Guid id)
         {
-            throw new NotImplementedException();
+            return await nZDB.regions.FirstOrDefaultAsync(x => x.Id == id); 
         }
 
-        public Task<Regions> UpdateRegion(Guid id, UpdateRegionDTO region)
+        public async Task<Regions?> UpdateRegion(Guid id, Regions region)
         {
-            throw new NotImplementedException();
+            var regions = await nZDB.regions.FirstOrDefaultAsync(x => x.Id == id);
+            if (region != null)
+            {
+                region.Code = region.Code;
+                region.Name = region.Name;
+                region.RegionImageURI = region.RegionImageURI;
+                await nZDB.SaveChangesAsync();
+                return regions;
+            }
+            return null;
         }
     }
 }
