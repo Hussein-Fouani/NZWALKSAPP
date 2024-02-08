@@ -22,14 +22,21 @@ namespace NZWALKS.IRepository
 
         }
 
-        public Task<Regions> DeleteRegion(Guid id)
+        public async Task<Regions?> DeleteRegion(Guid id)
         {
-            throw new NotImplementedException();
+            var region = await nZDB.regions.FirstOrDefaultAsync(x => x.Id == id);
+            if (region != null)
+            {
+                nZDB.regions.Remove(region);
+                await nZDB.SaveChangesAsync();
+                return region;
+            }
+            return null;
         }
 
-        public Task<List<Regions>> GetAllAsync()
+        public async Task<List<Regions>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return  await nZDB.regions.ToListAsync();
         }
 
         public async Task<Regions?> GetRegionByID(Guid id)
