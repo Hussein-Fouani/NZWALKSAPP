@@ -8,8 +8,7 @@ namespace NZWALKS.Mappings
     {
         public automapping()
         {
-            CreateMap<Regions, RegionDTO>().ReverseMap();
-
+            CreateMap<Regions, RegionDTO>().ReverseMap();  
         }
     }
 }
