@@ -51,15 +51,11 @@ namespace NZWALKS.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionDTO regions)
         {
+
             //Map or Convert Dto to domain model
             //use domain model to create region
-            var reg = new Regions
-            {
-                Code = regions.Code,
-                Name = regions.Name,
-                RegionImageURI = regions.RegionImageURI
-            };
-           await regionRepository.CreateRegion(reg); 
+            var reg = mapper.Map<Regions>(regions);
+         reg=  await regionRepository.CreateRegion(reg); 
           var region =  mapper.Map<RegionDTO>(reg);
             
             return CreatedAtAction(nameof(GetRegionByID),new {id=reg.Id}, region);
@@ -70,30 +66,14 @@ namespace NZWALKS.Controllers
         public async Task<IActionResult> UpdateRegion([FromBody] UpdateRegionDTO region, [FromRoute] Guid id)
         { 
             //map dto to domain
-            var regionmodel = new Regions
-            {
-                Code = region.Code,
-                Name = region.Name,
-                RegionImageURI = region.RegionImageURI
-            };
+            var regionmodel = mapper.Map<Regions>(region);
           var reg = await  regionRepository.UpdateRegion(id,regionmodel);
             if (reg == null)
             {
-                return BadRequest("Data provided Not Supported");
-            }
-            //Map DTO To domain
-             reg.Code=region.Code;
-             reg.Name = region.Name;
-             reg.RegionImageURI = region.RegionImageURI;
-            
-            var converted = new RegionDTO {
-                Id =reg.Id,
-                Name =reg.Name,
-                Code=reg.Code,
-                RegionImageURI = reg.RegionImageURI
-                }; 
+                return BadRequest("Data provided Not Supported"); }
+
           await   nZDB.SaveChangesAsync();
-            return Ok(converted);   
+            return Ok(mapper.Map<RegionDTO>(regionmodel));   
 
         }
         [HttpDelete]
@@ -105,14 +85,8 @@ namespace NZWALKS.Controllers
             {
                 return NotFound();
             }
-            var reg= new RegionDTO
-            {
-                Id = region.Id,
-                Code = region.Code,
-                Name = region.Name,
-                RegionImageURI = region.RegionImageURI
-            };
-            return Ok(reg);
+           
+            return Ok(mapper.Map<RegionDTO>(region));
         }
 }
 }
