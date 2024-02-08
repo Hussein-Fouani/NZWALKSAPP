@@ -72,8 +72,7 @@ namespace NZWALKS.Controllers
                 Name = regions.Name,
                 RegionImageURI = regions.RegionImageURI
             };
-            await nZDB.regions.AddAsync(reg);
-          await  nZDB.SaveChangesAsync();
+           await regionRepository.CreateRegion(reg); 
             var region= new RegionDTO
             {
                 Id=reg.Id,
@@ -88,7 +87,14 @@ namespace NZWALKS.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> UpdateRegion([FromBody] UpdateRegionDTO region, [FromRoute] Guid id)
         { 
-            var reg =await nZDB.regions.FirstOrDefaultAsync(x=>x.Id==id);
+            //map dto to domain
+            var regionmodel = new Regions
+            {
+                Code = region.Code,
+                Name = region.Name,
+                RegionImageURI = region.RegionImageURI
+            };
+          var reg = await  regionRepository.UpdateRegion(id,regionmodel);
             if (reg == null)
             {
                 return BadRequest("Data provided Not Supported");
