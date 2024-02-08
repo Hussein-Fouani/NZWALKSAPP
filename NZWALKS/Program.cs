@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NZWALKS.DB;
 using NZWALKS.IRepository;
+using NZWALKS.Mappings;
 using NZWALKS.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<NZDBContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IRegionRepository,RegionRepositoryImpl>();
+builder.Services.AddAutoMapper(typeof(automapping));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
