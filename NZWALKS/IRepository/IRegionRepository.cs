@@ -7,8 +7,8 @@ namespace NZWALKS.IRepository
     {
         Task<List<Regions>> GetAllAsync();
         Task<Regions> GetRegionByID(Guid id);
-        Task<Regions> CreateRegion(AddRegionDTO region);
-        Task<Regions> UpdateRegion(Guid id, UpdateRegionDTO region);
+        Task<Regions> CreateRegion(Regions region);
+        Task<Regions?> UpdateRegion(Guid id, Regions region);
         Task<Regions> DeleteRegion(Guid id);
     }
 }
