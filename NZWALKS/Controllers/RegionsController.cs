@@ -46,7 +46,7 @@ namespace NZWALKS.Controllers
 
              //var region =nZDB.regions.Find(id);
 
-            var region =await nZDB.regions.FirstOrDefaultAsync(x=>x.Id==id);
+            var region =await regionRepository.GetRegionByID(id);
             RegionDTO regionDTO = new RegionDTO
             {
                 Id = region.Id,
@@ -118,13 +118,19 @@ namespace NZWALKS.Controllers
         [Route("{Id:Guid}")]
         public async Task<IActionResult> deleteRegion(Guid Id)
         {
-            var region =await nZDB.regions.FirstOrDefaultAsync (i=>i.Id==Id);
-            if (region == null) { 
+            var region = await regionRepository.DeleteRegion(Id);
+            if (region == null)
+            {
                 return NotFound();
-                }
-            nZDB.regions.Remove(region);
-            await nZDB.SaveChangesAsync();
-            return NoContent();
+            }
+            var reg= new RegionDTO
+            {
+                Id = region.Id,
+                Code = region.Code,
+                Name = region.Name,
+                RegionImageURI = region.RegionImageURI
+            };
+            return Ok(reg);
         }
 }
 }
