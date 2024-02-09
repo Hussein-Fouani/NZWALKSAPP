@@ -39,10 +39,10 @@ namespace NZWALKS.Controllers
         }
         [HttpGet]
         // Get Walk
-        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
+        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? SortingQuery ,[FromQuery] bool? fromQuery)
         {
 
-            var walksdomain = walkrepository.GetAllWalks(filterOn,filterQuery);
+            var walksdomain = walkrepository.GetAllWalks(filterOn,filterQuery,SortingQuery,fromQuery);
             return Ok(mapper.Map<WalkDTO>(walksdomain));
 
         }
