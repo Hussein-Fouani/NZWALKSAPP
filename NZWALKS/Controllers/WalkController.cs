@@ -22,13 +22,17 @@ namespace NZWALKS.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> CreateWalks([FromBody] AddWalkDTO walkDTO){
-            var walk = mapper.Map<Walks>(walkDTO);
-            if (walk == null)
+            if (ModelState.IsValid)
             {
-                return null;
+                var walk = mapper.Map<Walks>(walkDTO);
+                if (walk == null)
+                {
+                    return null;
+                }
+                await walkrepository.CreateAsync(walk);
+                return Ok(mapper.Map<WalkDTO>(walk));
             }
-           await walkrepository.CreateAsync(walk);
-            return Ok(mapper.Map<WalkDTO>(walk));
+             return BadRequest();
 
         }
         [HttpGet]
@@ -70,7 +74,7 @@ namespace NZWALKS.Controllers
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<WalkDTO>(walktodelete));
+            return Ok(mapper.Map<WalkDTO>(walktodelete)); 
         }
 
     }
