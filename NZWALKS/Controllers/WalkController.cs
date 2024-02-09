@@ -32,7 +32,7 @@ namespace NZWALKS.Controllers
                 await walkrepository.CreateAsync(walk);
                 return Ok(mapper.Map<WalkDTO>(walk));
             }
-             return BadRequest();
+             return BadRequest(ModelState);
 
         }
         [HttpGet]
@@ -47,34 +47,46 @@ namespace NZWALKS.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult?> GetWalkByID(Guid id)
         {
-            var walk = walkrepository.GetWalkByIDAsync(id);
-            if (walk == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var walk = walkrepository.GetWalkByIDAsync(id);
+                if (walk == null)
+                {
+                    return NotFound();
+                }
+                return Ok(mapper.Map<WalkDTO>(walk));
             }
-            return Ok(mapper.Map<WalkDTO>(walk));
+            return BadRequest(ModelState);
         }
         [HttpPut]
         [Route("{i d:Guid}")]
         public async Task<IActionResult> UpdateWalk([FromRoute]Guid id, [FromBody] UpdateWalkDTO walkDTO)
         {
-            var walk = walkrepository.UpdateAsync(walkDTO, id);
-            if (walk == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var walk = walkrepository.UpdateAsync(walkDTO, id);
+                if (walk == null)
+                {
+                    return NotFound();
+                }
+                return Ok(mapper.Map<WalkDTO>(walk));
             }
-            return Ok(mapper.Map<WalkDTO>(walk));
+            return BadRequest(ModelState);
         }
         [HttpDelete]
         [Route("{Id:Guid}")]
         public async Task<IActionResult> DeleteWalk([FromRoute]Guid Id)
         {
-            var walktodelete = walkrepository.DeleteWalk(Id);
-            if (walktodelete == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
-            }
-            return Ok(mapper.Map<WalkDTO>(walktodelete)); 
+                var walktodelete = walkrepository.DeleteWalk(Id);
+                if (walktodelete == null)
+                {
+                    return NotFound();
+                }
+                return Ok(mapper.Map<WalkDTO>(walktodelete));
+            } 
+            return BadRequest(ModelState);
         }
 
     }
