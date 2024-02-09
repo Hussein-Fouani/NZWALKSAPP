@@ -35,6 +35,23 @@ namespace NZWALKS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("difficulties");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a819730b-fe96-49f4-bf91-9d73e560f96d"),
+                            Name = "Easy"
+                        },
+                        new
+                        {
+                            Id = new Guid("d572fe86-b1b5-42c2-8f27-8f650b44bd4a"),
+                            Name = "Easy"
+                        },
+                        new
+                        {
+                            Id = new Guid("ad5f514d-15a9-42b6-b032-6e000b812ab2"),
+                            Name = "Easy"
+                        });
                 });
 
             modelBuilder.Entity("NZWALKS.Models.Regions", b =>
@@ -57,6 +74,29 @@ namespace NZWALKS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("regions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("57b59cc8-2fe0-4308-8249-c4b18027a080"),
+                            Code = "NL",
+                            Name = "Northland",
+                            RegionImageURI = "https://www.doc.govt.nz/globalassets/images/places/northland/northland.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("94c2967b-8dad-46c7-847b-2b233c8d8800"),
+                            Code = "AK",
+                            Name = "Auckland",
+                            RegionImageURI = "https://www.doc.govt.nz/globalassets/images/places/auckland/auckland.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("f9331faf-6ac3-4bf8-a0bc-9132bd9f4766"),
+                            Code = "WK",
+                            Name = "Waikato",
+                            RegionImageURI = "https://www.doc.govt.nz/globalassets/images/places/waikato/waikato.jpg"
+                        });
                 });
 
             modelBuilder.Entity("NZWALKS.Models.Walks", b =>
