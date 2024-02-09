@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NZWALKS.DB;
 using NZWALKS.Models;
@@ -38,7 +39,7 @@ namespace NZWALKS.IRepository
             return walk;
         }
 
-        public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null,string? soritngquery)
+        public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null, [FromQuery] string? SortingQuery = null, [FromQuery] bool? fromQuery= true)
         {
             //var getall = await nZDB.Walks.Include("regions").Include("difficulty").ToListAsync();
             var walks = nZDB.Walks.Include("regions").Include("difficulty").AsQueryable();
@@ -55,8 +56,20 @@ namespace NZWALKS.IRepository
                     default:
                         break;
                 }
-            } 
-            return getall;
+            }
+            if (string.IsNullOrEmpty(SortingQuery)==false)
+            {
+                if(SortingQuery.ToLower()=="Name")
+                {
+                    walks = (bool)fromQuery ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                }
+               
+                else if (SortingQuery.ToLower() == "length")
+                {
+                    walks= (bool)fromQuery ? walks.OrderBy(x=>x.LengthInKm):walks.OrderByDescending(x=>x.LengthInKm);
+                }
+            }
+            return await walks.ToListAsync();
         }
 
         public Task<Walks?> GetWalkByIDAsync(Guid id)
@@ -74,10 +87,8 @@ namespace NZWALKS.IRepository
             }
             walk.Name = walkDTO.Name;
             walk.Description = walkDTO.Description;
-            walk.LengthInKm = walkDTO.LengthInKm;
             walk.WalkImageURI = walkDTO.WalkImageURI;
             walk.RegionId = walkDTO.RegionId;
-            walk.DifficultyId = walkDTO.DifficultyId;   
             await nZDB.SaveChangesAsync();
             return walk; 
             
