@@ -8,7 +8,7 @@ namespace NZWALKS.IRepository
     {
       Task<Walks>  CreateAsync(Walks walkDTO);
         Task<Walks>  UpdateAsync(UpdateWalkDTO walkDTO,Guid Id);
-        Task<List<Walks>> GetAllWalks();
+        Task<List<Walks>> GetAllWalks(string? filter=null,string? filterQuery=null);
         Task<Walks?> GetWalkByIDAsync(Guid id);
         Task<Walks?> DeleteWalk(Guid id);
     }
