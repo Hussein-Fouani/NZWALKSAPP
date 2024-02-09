@@ -40,7 +40,22 @@ namespace NZWALKS.IRepository
 
         public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null)
         {
-            var getall = await nZDB.Walks.Include("regions").Include("difficulty").ToListAsync();
+            //var getall = await nZDB.Walks.Include("regions").Include("difficulty").ToListAsync();
+            var walks = nZDB.Walks.Include("regions").Include("difficulty").AsQueryable();
+            if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filter.ToLower())
+                {
+                    case "region":
+                        walks = walks.Where(x => x.regions.Name.ToLower().Contains(filterQuery.ToLower()));
+                        break;
+                    case "difficulty":
+                        walks = walks.Where(x => x.difficulty.Name.ToLower().Contains(filterQuery.ToLower()));
+                        break;
+                    default:
+                        break;
+                }
+            }
             return getall;
         }
 
