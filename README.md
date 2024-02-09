@@ -63,7 +63,66 @@ To get started with the New Zealand Walks API, follow the steps outlined in our 
 
 ## Installation
 
-Follow the steps in the [**Installation Guide**](url_to_installation_guide) to set up the New Zealand Walks API on your local machine.
+### Installation Steps for New Zealand Walks API:
+
+1. **Install Prerequisites:**
+   - Install [.NET SDK](https://dotnet.microsoft.com/download) for your platform.
+   - Choose an Integrated Development Environment (IDE) such as [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/).
+
+2. **Create a New API Project:**
+   - Open a terminal or command prompt.
+   - Run the following command to create a new ASP.NET Core API project:
+     ```bash
+     dotnet new webapi -n NZWalksApi
+     ```
+
+3. **Navigate to the Project Directory:**
+   - Change into the newly created project directory:
+     ```bash
+     cd NZWalksApi
+     ```
+
+4. **Open the Project in Your IDE:**
+   - If you're using Visual Studio Code:
+     ```bash
+     code .
+     ```
+   - If you're using Visual Studio, open the solution file (`NZWalksApi.sln`).
+
+5. **Configure the Database (if applicable):**
+   - If your API interacts with a database, configure the database connection in `appsettings.json`.
+   - Run migrations to create the database:
+     ```bash
+     dotnet ef migrations add InitialCreate
+     dotnet ef database update
+     ```
+
+6. **Run the API Locally:**
+   - Execute the following command to run the API locally:
+     ```bash
+     dotnet run
+     ```
+   - The API should be accessible at `https://localhost:5001` or `http://localhost:5000`.
+
+7. **Test the API:**
+   - Open a web browser or a tool like [Postman](https://www.postman.com/) to test your API endpoints.
+   - By default, the API should have a sample endpoint like `WeatherForecast`.
+
+8. **Explore and Modify:**
+   - Dive into the code, explore the controllers, and models.
+   - Customize the API to represent New Zealand walks.
+
+9. **Documentation and Swagger (Optional):**
+   - If desired, add [Swagger](https://swagger.io/) for API documentation.
+   - Install the Swagger NuGet package:
+     ```bash
+     dotnet add package Swashbuckle.AspNetCore
+     ```
+   - Configure Swagger in `Startup.cs`.
+
+10. **Deploy (Optional):**
+    - To deploy your API, publish it to a hosting platform like [Azure](https://azure.microsoft.com/) or [AWS](https://aws.amazon.com/).
+
 
 ## Usage
 
