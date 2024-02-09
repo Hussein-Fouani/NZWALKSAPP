@@ -38,7 +38,7 @@ namespace NZWALKS.IRepository
             return walk;
         }
 
-        public async Task<List<Walks>> GetAllWalks()
+        public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null)
         {
             var getall = await nZDB.Walks.Include("regions").Include("difficulty").ToListAsync();
             return getall;
