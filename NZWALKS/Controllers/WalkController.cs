@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NZWALKS.CustomAFilter;
 using NZWALKS.IRepository;
 using NZWALKS.Models;
 using NZWALKS.Models.DTO;
@@ -21,9 +22,10 @@ namespace NZWALKS.Controllers
             this.walkrepository = walkrepository;
         }
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> CreateWalks([FromBody] AddWalkDTO walkDTO){
-            if (ModelState.IsValid)
-            {
+           
+            
                 var walk = mapper.Map<Walks>(walkDTO);
                 if (walk == null)
                 {
@@ -31,8 +33,8 @@ namespace NZWALKS.Controllers
                 }
                 await walkrepository.CreateAsync(walk);
                 return Ok(mapper.Map<WalkDTO>(walk));
-            }
-             return BadRequest(ModelState);
+            
+             
 
         }
         [HttpGet]
@@ -45,48 +47,45 @@ namespace NZWALKS.Controllers
         }
         [HttpGet]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult?> GetWalkByID(Guid id)
         {
-            if (ModelState.IsValid)
-            {
+            
                 var walk = walkrepository.GetWalkByIDAsync(id);
                 if (walk == null)
                 {
                     return NotFound();
                 }
                 return Ok(mapper.Map<WalkDTO>(walk));
-            }
-            return BadRequest(ModelState);
+            
         }
         [HttpPut]
         [Route("{i d:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateWalk([FromRoute]Guid id, [FromBody] UpdateWalkDTO walkDTO)
         {
-            if (ModelState.IsValid)
-            {
+            
                 var walk = walkrepository.UpdateAsync(walkDTO, id);
                 if (walk == null)
                 {
                     return NotFound();
                 }
                 return Ok(mapper.Map<WalkDTO>(walk));
-            }
-            return BadRequest(ModelState);
+         
         }
         [HttpDelete]
         [Route("{Id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> DeleteWalk([FromRoute]Guid Id)
         {
-            if (ModelState.IsValid)
-            {
+            
                 var walktodelete = walkrepository.DeleteWalk(Id);
                 if (walktodelete == null)
                 {
                     return NotFound();
                 }
                 return Ok(mapper.Map<WalkDTO>(walktodelete));
-            } 
-            return BadRequest(ModelState);
+            
         }
 
     }
