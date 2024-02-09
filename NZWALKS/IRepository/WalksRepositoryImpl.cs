@@ -38,7 +38,7 @@ namespace NZWALKS.IRepository
             return walk;
         }
 
-        public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null)
+        public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null,string? soritngquery)
         {
             //var getall = await nZDB.Walks.Include("regions").Include("difficulty").ToListAsync();
             var walks = nZDB.Walks.Include("regions").Include("difficulty").AsQueryable();
@@ -55,7 +55,7 @@ namespace NZWALKS.IRepository
                     default:
                         break;
                 }
-            }
+            } 
             return getall;
         }
 
