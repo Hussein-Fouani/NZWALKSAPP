@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NZWALKS.CustomAFilter;
 using NZWALKS.DB;
 using NZWALKS.IRepository;
 using NZWALKS.Models;
@@ -26,6 +27,7 @@ namespace NZWALKS.Controllers
         }
         //Document this method
         [HttpGet]
+      
         public async Task<IActionResult> GetAll()
         {
             var regionsDomain = await regionRepository.GetAllAsync();
@@ -33,6 +35,7 @@ namespace NZWALKS.Controllers
         }
         [HttpGet]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> GetRegionByID([FromRoute]Guid id)
         {
 
@@ -49,6 +52,7 @@ namespace NZWALKS.Controllers
             
         }
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionDTO regions)
         {
 
@@ -63,6 +67,7 @@ namespace NZWALKS.Controllers
     }
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateRegion([FromBody] UpdateRegionDTO region, [FromRoute] Guid id)
         { 
             //map dto to domain
@@ -78,6 +83,7 @@ namespace NZWALKS.Controllers
         }
         [HttpDelete]
         [Route("{Id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> deleteRegion(Guid Id)
         {
             var region = await regionRepository.DeleteRegion(Id);
