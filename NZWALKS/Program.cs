@@ -6,6 +6,7 @@ using NZWALKS.IRepository;
 using NZWALKS.Mappings;
 using NZWALKS.Models;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,21 @@ builder.Services.AddDbContext<AuthDBContext>(options=> options.UseSqlServer(buil
 
 builder.Services.AddAuthentication().AddBearerToken();
 builder.Services.AddAuthorizationBuilder();
+builder.Services.AddIdentityCore<IdentityUser>().AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("NzWalks")
+    .AddEntityFrameworkStores<AuthDBContext>();
+
+ builder.Services.Configure<IdentityOptions>(options =>
+ {
+     options.Password.RequireDigit = true;
+     options.Password.RequireLowercase = true;
+     options.Password.RequireUppercase = true;
+     options.Password.RequireNonAlphanumeric = true;
+     options.Password.RequiredLength = 8;
+     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+     options.Lockout.MaxFailedAccessAttempts = 5;
+     options.Lockout.AllowedForNewUsers = true;
+ });
 
 var app = builder.Build();
 
@@ -44,7 +60,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
 
-
+    
     app.UseSwagger();
     app.UseSwaggerUI();  
 }
