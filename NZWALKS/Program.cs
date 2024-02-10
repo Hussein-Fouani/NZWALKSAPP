@@ -33,6 +33,10 @@ options.TokenValidationParameters= new Microsoft.IdentityModel.Tokens.TokenValid
     IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
 });
 
+builder.Services.AddDbContext<AuthDBContext>(options=> options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection")));
+
+builder.Services.AddAuthentication().AddBearerToken();
+builder.Services.AddAuthorizationBuilder();
 
 var app = builder.Build();
 
