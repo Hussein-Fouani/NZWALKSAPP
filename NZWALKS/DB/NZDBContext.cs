@@ -5,7 +5,7 @@ namespace NZWALKS.DB
 {
     public class NZDBContext:DbContext
     {
-        public NZDBContext(DbContextOptions option):base(option)
+        public NZDBContext(DbContextOptions<NZDBContext> option):base(option)
         {
 
             
