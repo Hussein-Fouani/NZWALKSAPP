@@ -39,7 +39,7 @@ namespace NZWALKS.IRepository
             return walk;
         }
 
-        public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null, [FromQuery] string? SortingQuery = null, [FromQuery] bool? fromQuery= true)
+        public async Task<List<Walks>> GetAllWalks(string? filter = null, string? filterQuery = null, [FromQuery] string? SortingQuery = null, [FromQuery] bool? fromQuery= true, [FromQuery] int pagenb = 1, [FromQuery] int pagsize = 20)
         {
             //var getall = await nZDB.Walks.Include("regions").Include("difficulty").ToListAsync();
             var walks = nZDB.Walks.Include("regions").Include("difficulty").AsQueryable();
@@ -69,7 +69,9 @@ namespace NZWALKS.IRepository
                     walks= (bool)fromQuery ? walks.OrderBy(x=>x.LengthInKm):walks.OrderByDescending(x=>x.LengthInKm);
                 }
             }
-            return await walks.ToListAsync();
+            var skipResults = (pagenb-1)* pagsize;
+
+            return await walks.Skip(skipResults).Take(pagsize).ToListAsync();
         }
 
         public Task<Walks?> GetWalkByIDAsync(Guid id)
