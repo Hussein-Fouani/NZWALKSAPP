@@ -16,10 +16,10 @@ public class RegionsController : ControllerBase
 {
     private readonly IMapper mapper;
 
-    private readonly NZDBContext nZDB;
+    private readonly NzdbContext nZDB;
     private readonly IRegionRepository regionRepository;
 
-    public RegionsController(NZDBContext nZDB, IRegionRepository regionRepository, IMapper mapper)
+    public RegionsController(NzdbContext nZDB, IRegionRepository regionRepository, IMapper mapper)
     {
         this.nZDB = nZDB;
         this.regionRepository = regionRepository;
@@ -28,6 +28,7 @@ public class RegionsController : ControllerBase
 
     //Document this method
     [HttpGet]
+    [Authorize(Roles = "Reader")]
     public async Task<IActionResult> GetAll()
     {
         var regionsDomain = await regionRepository.GetAllAsync();
@@ -37,6 +38,7 @@ public class RegionsController : ControllerBase
     [HttpGet]
     [Route("{id:Guid}")]
     [ValidateModel]
+    [Authorize(Roles = "Reader")]
     public async Task<IActionResult> GetRegionByID([FromRoute] Guid id)
     {
         //var region =nZDB.regions.Find(id);
@@ -50,6 +52,7 @@ public class RegionsController : ControllerBase
 
     [HttpPost]
     [ValidateModel]
+    [Authorize(Roles = "Writer")]
     public async Task<IActionResult> CreateRegion([FromBody] AddRegionDTO regions)
     {
         //Map or Convert Dto to domain model
@@ -64,6 +67,7 @@ public class RegionsController : ControllerBase
     [HttpPut]
     [Route("{id:Guid}")]
     [ValidateModel]
+    [Authorize(Roles = "Writer")]
     public async Task<IActionResult> UpdateRegion([FromBody] UpdateRegionDTO region, [FromRoute] Guid id)
     {
         //map dto to domain
@@ -78,6 +82,7 @@ public class RegionsController : ControllerBase
     [HttpDelete]
     [Route("{Id:Guid}")]
     [ValidateModel]
+    [Authorize(Roles = "Writer")]
     public async Task<IActionResult> deleteRegion(Guid Id)
     {
         var region = await regionRepository.DeleteRegion(Id);
