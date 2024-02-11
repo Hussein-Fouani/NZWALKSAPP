@@ -11,7 +11,7 @@ using NZWALKS.DB;
 
 namespace NZWALKS.Migrations
 {
-    [DbContext(typeof(NZDBContext))]
+    [DbContext(typeof(NzdbContext))]
     [Migration("20240208120711_seeding Diff for Regions")]
     partial class seedingDiffforRegions
     {
