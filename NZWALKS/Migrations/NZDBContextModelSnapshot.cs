@@ -10,7 +10,7 @@ using NZWALKS.DB;
 
 namespace NZWALKS.Migrations
 {
-    [DbContext(typeof(NZDBContext))]
+    [DbContext(typeof(NzdbContext))]
     partial class NZDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace NZWALKS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("difficulties");
+                    b.ToTable("Difficulties");
 
                     b.HasData(
                         new
@@ -52,6 +52,35 @@ namespace NZWALKS.Migrations
                             Id = new Guid("ad5f514d-15a9-42b6-b032-6e000b812ab2"),
                             Name = "Easy"
                         });
+                });
+
+            modelBuilder.Entity("NZWALKS.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FileDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileExtension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSizeInBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("filePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("NZWALKS.Models.Regions", b =>
@@ -73,7 +102,7 @@ namespace NZWALKS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("regions");
+                    b.ToTable("Regions");
 
                     b.HasData(
                         new
