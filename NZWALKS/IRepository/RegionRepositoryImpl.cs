@@ -8,15 +8,15 @@ namespace NZWALKS.IRepository
 {
     public class RegionRepositoryImpl : IRegionRepository
     {
-        private readonly NZDBContext nZDB;
-        public RegionRepositoryImpl(NZDBContext nZDB)
+        private readonly NzdbContext nZDB;
+        public RegionRepositoryImpl(NzdbContext nZDB)
         {
             this.nZDB = nZDB;
         }
 
         public async Task<Regions> CreateRegion(Regions region)
         {
-           await nZDB.regions.AddAsync(region); 
+           await nZDB.Regions.AddAsync(region); 
             await nZDB.SaveChangesAsync();
             return region;
 
@@ -24,10 +24,10 @@ namespace NZWALKS.IRepository
 
         public async Task<Regions?> DeleteRegion(Guid id)
         {
-            var region = await nZDB.regions.FirstOrDefaultAsync(x => x.Id == id);
+            var region = await nZDB.Regions.FirstOrDefaultAsync(x => x.Id == id);
             if (region != null)
             {
-                nZDB.regions.Remove(region);
+                nZDB.Regions.Remove(region);
                 await nZDB.SaveChangesAsync();
                 return region;
             }
@@ -36,17 +36,17 @@ namespace NZWALKS.IRepository
 
         public async Task<List<Regions>> GetAllAsync()
         {
-            return  await nZDB.regions.ToListAsync();
+            return  await nZDB.Regions.ToListAsync();
         }
 
         public async Task<Regions?> GetRegionByID(Guid id)
         {
-            return await nZDB.regions.FirstOrDefaultAsync(x => x.Id == id); 
+            return await nZDB.Regions.FirstOrDefaultAsync(x => x.Id == id); 
         }
 
         public async Task<Regions?> UpdateRegion(Guid id, Regions region)
         {
-            var regions = await nZDB.regions.FirstOrDefaultAsync(x => x.Id == id);
+            var regions = await nZDB.Regions.FirstOrDefaultAsync(x => x.Id == id);
             if (region != null)
             {
                 region.Code = region.Code;
