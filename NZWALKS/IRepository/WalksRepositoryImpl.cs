@@ -11,10 +11,10 @@ namespace NZWALKS.IRepository
 {
     public class WalksRepositoryImpl : IWalkRepository
     {
-        private readonly NZDBContext nZDB;
+        private readonly NzdbContext nZDB;
         private readonly IMapper mapper;
 
-        public WalksRepositoryImpl(NZDBContext nZDB,IMapper mapper)
+        public WalksRepositoryImpl(NzdbContext nZDB,IMapper mapper)
         {
             this.nZDB = nZDB;
             this.mapper = mapper;
