@@ -5,9 +5,9 @@ using NZWALKS.Models.WalksDTO;
 
 namespace NZWALKS.Mappings
 {
-    public class automapping:Profile
+    public class Automapping:Profile
     {
-        public automapping()
+        public Automapping()
         {
             CreateMap<Regions, RegionDTO>().ReverseMap();  
             CreateMap<AddRegionDTO, Regions>().ReverseMap();
@@ -16,6 +16,7 @@ namespace NZWALKS.Mappings
             CreateMap<WalkDTO,Walks>().ReverseMap();
             CreateMap<Difficulty,DifficultyDTO>().ReverseMap();
             CreateMap<UpdateWalkDTO,Walks>().ReverseMap();
+            CreateMap<Image,ImageUploadRequestDto>().ReverseMap();
         }
     }
 }
