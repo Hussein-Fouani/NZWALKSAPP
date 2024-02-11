@@ -3,16 +3,16 @@ using NZWALKS.Models;
 
 namespace NZWALKS.DB
 {
-    public class NZDBContext:DbContext
+    public class NzdbContext:DbContext
     {
-        public NZDBContext(DbContextOptions<NZDBContext> option):base(option)
+        public NzdbContext(DbContextOptions<NzdbContext> options):base(options)
         {
-
-            
+           
         }
-        public DbSet<Walks> Walks { get; set; }
-        public DbSet<Regions> regions { get; set; }
-        public DbSet<Difficulty> difficulties { get; set; }
+        public DbSet<Walks> Walks { get; set; }  
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Regions> Regions { get; set; }
+        public DbSet<Difficulty> Difficulties { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
