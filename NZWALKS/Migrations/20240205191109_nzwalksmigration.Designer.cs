@@ -11,7 +11,7 @@ using NZWALKS.DB;
 
 namespace NZWALKS.Migrations
 {
-    [DbContext(typeof(NZDBContext))]
+    [DbContext(typeof(NzdbContext))]
     [Migration("20240205191109_nzwalksmigration")]
     partial class nzwalksmigration
     {
