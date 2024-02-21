@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWALKS.CustomAFilter;
@@ -14,16 +15,18 @@ namespace NZWALKS.Controllers;
 [ApiController]
 public class RegionsController : ControllerBase
 {
-    private readonly IMapper mapper;
+    private readonly IMapper _mapper;
 
-    private readonly NzdbContext nZDB;
-    private readonly IRegionRepository regionRepository;
+    private readonly NzdbContext _nZdb;
+    private readonly ILogger<RegionsController> _logger;
+    private readonly IRegionRepository _regionRepository;
 
-    public RegionsController(NzdbContext nZDB, IRegionRepository regionRepository, IMapper mapper)
+    public RegionsController(NzdbContext nZdb, ILogger<RegionsController> logger,IRegionRepository regionRepository, IMapper mapper)
     {
-        this.nZDB = nZDB;
-        this.regionRepository = regionRepository;
-        this.mapper = mapper;
+        this._nZdb = nZdb;
+        _logger = logger;
+        this._regionRepository = regionRepository;
+        this._mapper = mapper;
     }
 
     //Document this method
@@ -31,23 +34,34 @@ public class RegionsController : ControllerBase
     [Authorize(Roles = "Reader")]
     public async Task<IActionResult> GetAll()
     {
-        var regionsDomain = await regionRepository.GetAllAsync();
-        return Ok(mapper.Map<List<RegionDTO>>(regionsDomain));
+        _logger.LogError("All Records had been requested");
+        var regionsDomain = await _regionRepository.GetAllAsync();
+        return Ok(_mapper.Map<List<RegionDTO>>(regionsDomain));
     }
 
     [HttpGet]
     [Route("{id:Guid}")]
     [ValidateModel]
     [Authorize(Roles = "Reader")]
-    public async Task<IActionResult> GetRegionByID([FromRoute] Guid id)
+    public async Task<IActionResult> GetRegionById([FromRoute] Guid id)
     {
         //var region =nZDB.regions.Find(id);
 
-        var region = await regionRepository.GetRegionByID(id);
-        var regionDto = mapper.Map<RegionDTO>(region);
+        try
+        {
+            var region = await _regionRepository.GetRegionByID(id);
+            var regionDto = _mapper.Map<RegionDTO>(region);
+            return Ok(regionDto);
+        }
+        catch (Exception)
+        {
 
-        if (region == null) return NotFound();
-        return Ok(regionDto);
+            return Problem("RegionNotFound", null, (int)HttpStatusCode.NotFound, "");
+        }
+
+        
+
+        
     }
 
     [HttpPost]
@@ -57,11 +71,11 @@ public class RegionsController : ControllerBase
     {
         //Map or Convert Dto to domain model
         //use domain model to create region
-        var reg = mapper.Map<Regions>(regions);
-        reg = await regionRepository.CreateRegion(reg);
-        var region = mapper.Map<RegionDTO>(reg);
+        var reg = _mapper.Map<Regions>(regions);
+        reg = await _regionRepository.CreateRegion(reg);
+        var region = _mapper.Map<RegionDTO>(reg);
 
-        return CreatedAtAction(nameof(GetRegionByID), new { id = reg.Id }, region);
+        return CreatedAtAction(nameof(GetRegionById), new { id = reg.Id }, region);
     }
 
     [HttpPut]
@@ -71,24 +85,24 @@ public class RegionsController : ControllerBase
     public async Task<IActionResult> UpdateRegion([FromBody] UpdateRegionDTO region, [FromRoute] Guid id)
     {
         //map dto to domain
-        var regionmodel = mapper.Map<Regions>(region);
-        var reg = await regionRepository.UpdateRegion(id, regionmodel);
+        var regionmodel = _mapper.Map<Regions>(region);
+        var reg = await _regionRepository.UpdateRegion(id, regionmodel);
         if (reg == null) return BadRequest("Data provided Not Supported");
 
-        await nZDB.SaveChangesAsync();
-        return Ok(mapper.Map<RegionDTO>(regionmodel));
+        await _nZdb.SaveChangesAsync();
+        return Ok(_mapper.Map<RegionDTO>(regionmodel));
     }
 
     [HttpDelete]
     [Route("{Id:Guid}")]
     [ValidateModel]
     [Authorize(Roles = "Writer")]
-    public async Task<IActionResult> deleteRegion(Guid Id)
+    public async Task<IActionResult> DeleteRegion(Guid Id)
     {
-        var region = await regionRepository.DeleteRegion(Id);
+        var region = await _regionRepository.DeleteRegion(Id);
         if (region == null) return NotFound();
 
-        return Ok(mapper.Map<RegionDTO>(region));
+        return Ok(_mapper.Map<RegionDTO>(region));
     }
     
 }
