@@ -23,7 +23,7 @@ public class GlobalHandler
         }
         catch (Exception e)
         {
-            var errorID = Guid.NewGuid;
+            var errorID = Guid.NewGuid();
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";
             var erromsg = new
