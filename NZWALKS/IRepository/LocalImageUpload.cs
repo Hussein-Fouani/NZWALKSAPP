@@ -21,7 +21,8 @@ namespace NZWALKS.IRepository
             using var stream = new FileStream(localPath, FileMode.Create);
             await image.File.CopyToAsync(stream);
 
-            var urnfieldPath = $"{contextAccessor.HttpContext.Request.Scheme}//{contextAccessor.HttpContext.Request.Host}{contextAccessor.HttpContext.Request.PathBase}/ Image/{image.FileName}{image.FileExtension}";
+            var urnfieldPath = $"{contextAccessor.HttpContext.Request.Scheme}://{contextAccessor.HttpContext.Request.Host}{contextAccessor.HttpContext.Request.PathBase}/Images/{image.FileName}{image.FileExtension}";
+            image.filePath = urnfieldPath;
 
             await dBContext.Images.AddAsync(image);
             await dBContext.SaveChangesAsync();

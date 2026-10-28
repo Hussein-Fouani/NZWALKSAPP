@@ -47,11 +47,11 @@ namespace NZWALKS.IRepository
         public async Task<Regions?> UpdateRegion(Guid id, Regions region)
         {
             var regions = await nZDB.Regions.FirstOrDefaultAsync(x => x.Id == id);
-            if (region != null)
+            if (regions != null)
             {
-                region.Code = region.Code;
-                region.Name = region.Name;
-                region.RegionImageURI = region.RegionImageURI;
+                regions.Code = region.Code;
+                regions.Name = region.Name;
+                regions.RegionImageURI = region.RegionImageURI;
                 await nZDB.SaveChangesAsync();
                 return regions;
             }

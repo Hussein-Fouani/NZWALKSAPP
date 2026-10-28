@@ -59,14 +59,14 @@ namespace NZWALKS.IRepository
             }
             if (string.IsNullOrEmpty(SortingQuery)==false)
             {
-                if(SortingQuery.ToLower()=="Name")
+                if(SortingQuery.ToLower()=="name")
                 {
-                    walks = (bool)fromQuery ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                    walks = (fromQuery ?? true) ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
                 }
                
                 else if (SortingQuery.ToLower() == "length")
                 {
-                    walks= (bool)fromQuery ? walks.OrderBy(x=>x.LengthInKm):walks.OrderByDescending(x=>x.LengthInKm);
+                    walks= (fromQuery ?? true) ? walks.OrderBy(x=>x.LengthInKm):walks.OrderByDescending(x=>x.LengthInKm);
                 }
             }
             var skipResults = (pagenb-1)* pagsize;
