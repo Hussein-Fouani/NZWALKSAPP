@@ -58,6 +58,7 @@ builder.Services.AddDbContext<NzdbContext>(options =>
 builder.Services.AddScoped<IRegionRepository, RegionRepositoryImpl>();
 builder.Services.AddScoped<IWalkRepository, WalksRepositoryImpl>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<IImageRepository, LocalImageUpload>();
 builder.Services.AddAutoMapper(typeof(Automapping));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -107,6 +108,7 @@ app.UseHttpsRedirection();
 app.UseMiddleware<GlobalHandler>(); 
 app.UseAuthentication();
 app.UseAuthorization();
+Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Images"));
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider=new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"Images")),
