@@ -26,6 +26,8 @@ namespace NZWALKS.Controllers
             if (ModelState.IsValid)
             {
                  var imagedomain = mapper.Map<Image>(image);
+                imagedomain.FileExtension = Path.GetExtension(image.File.FileName);
+                imagedomain.FileSizeInBytes = image.File.Length;
                 await imageRepository.UploadImage(imagedomain);
                 return Ok(imagedomain);
 
@@ -36,7 +38,7 @@ namespace NZWALKS.Controllers
         private void validateImage(ImageUploadRequestDto image)
         {
            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-            if (!allowedExtensions.Contains(Path.GetExtension(image.FileName)))
+            if (!allowedExtensions.Contains(Path.GetExtension(image.File.FileName)))
             {
                ModelState.AddModelError("File", "Invalid file extension."); 
             }

@@ -42,8 +42,8 @@ namespace NZWALKS.Controllers
         public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? SortingQuery ,[FromQuery] bool? fromQuery, [FromQuery] int pagenb = 1, [FromQuery] int pagsize=20)
         {
 
-            var walksdomain = walkrepository.GetAllWalks(filterOn, filterQuery, SortingQuery, fromQuery, pagenb,pagsize);
-            return Ok(mapper.Map<WalkDTO>(walksdomain));
+            var walksdomain = await walkrepository.GetAllWalks(filterOn, filterQuery, SortingQuery, fromQuery, pagenb,pagsize);
+            return Ok(mapper.Map<List<WalkDTO>>(walksdomain));
 
         }
         [HttpGet]
@@ -52,7 +52,7 @@ namespace NZWALKS.Controllers
         public async Task<IActionResult?> GetWalkByID(Guid id)
         {
             
-                var walk = walkrepository.GetWalkByIDAsync(id);
+                var walk = await walkrepository.GetWalkByIDAsync(id);
                 if (walk == null)
                 {
                     return NotFound();
@@ -61,12 +61,12 @@ namespace NZWALKS.Controllers
             
         }
         [HttpPut]
-        [Route("{i d:Guid}")]
+        [Route("{id:Guid}")]
         [ValidateModel]
         public async Task<IActionResult> UpdateWalk([FromRoute]Guid id, [FromBody] UpdateWalkDTO walkDTO)
         {
             
-                var walk = walkrepository.UpdateAsync(walkDTO, id);
+                var walk = await walkrepository.UpdateAsync(walkDTO, id);
                 if (walk == null)
                 {
                     return NotFound();
@@ -80,7 +80,7 @@ namespace NZWALKS.Controllers
         public async Task<IActionResult> DeleteWalk([FromRoute]Guid Id)
         {
             
-                var walktodelete = walkrepository.DeleteWalk(Id);
+                var walktodelete = await walkrepository.DeleteWalk(Id);
                 if (walktodelete == null)
                 {
                     return NotFound();

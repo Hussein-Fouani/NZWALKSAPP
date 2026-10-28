@@ -61,8 +61,6 @@ public class AuthController : ControllerBase
                 }
                 
             }
-
-            return Ok();
         }
 
         return BadRequest("UserName or Password Incorrect");
